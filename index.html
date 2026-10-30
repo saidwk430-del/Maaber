@@ -251,7 +251,7 @@
     <!-- الهيدر الفخم -->
     <header>
         <h1>Maaber</h1>
-        <div class="badge">النسخة الفاخرة ⚡</div>
+        <div class="badge">متصل بالسحابة ⚡</div>
     </header>
 
     <!-- 1. الشاشة الرئيسية -->
@@ -277,7 +277,7 @@
                 <span>♿</span>
                 <h3>الأماكن المتاحة</h3>
             </div>
-            <div class="menu-card" onclick="alert('تطبيق Maaber يعمل بنظام فخم ومستقر تماماً.')">
+            <div class="menu-card" onclick="alert('تطبيق Maaber متصل بقاعدة البيانات ويعمل بكفاءة.')">
                 <span>🛡️</span>
                 <h3>الحالة الآمنة</h3>
             </div>
@@ -304,7 +304,7 @@
         <div class="welcome-text" style="font-size: 17px; margin-bottom: 6px;">إبلاغ سريع عن عائق ⚠️</div>
         <p style="font-size: 13px; color: #9ca3af; margin-bottom: 12px;">اختر نوع العائق لتنبيه المستخدمين الآخرين فوراً:</p>
 
-        <div class="report-option" onclick="selectReport(this)">
+        <div class="report-option" onclick="selectReport(this, 'درج أو عتبة مرتفعة')">
             <span>🪜</span>
             <div>
                 <strong style="font-size: 14px; color: #f3f4f6;">درج أو عتبة مرتفعة</strong>
@@ -312,7 +312,7 @@
             </div>
         </div>
 
-        <div class="report-option" onclick="selectReport(this)">
+        <div class="report-option" onclick="selectReport(this, 'حفريات أو أشغال طريق')">
             <span>🚧</span>
             <div>
                 <strong style="font-size: 14px; color: #f3f4f6;">حفريات أو أشغال طريق</strong>
@@ -320,7 +320,7 @@
             </div>
         </div>
 
-        <div class="report-option" onclick="selectReport(this)">
+        <div class="report-option" onclick="selectReport(this, 'سيارة تقفل الرصيف')">
             <span>🚗</span>
             <div>
                 <strong style="font-size: 14px; color: #f3f4f6;">سيارة تقفل الرصيف</strong>
@@ -328,7 +328,7 @@
             </div>
         </div>
 
-        <button class="btn-primary" onclick="sendReport()" style="margin-top: 10px;">إرسال التنبيه الآن 🚀</button>
+        <button class="btn-primary" onclick="sendReportToFirebase()" style="margin-top: 10px;">إرسال التنبيه الآن 🚀</button>
     </div>
 
     <!-- الفوتر السفلي الفخم -->
@@ -345,12 +345,31 @@
     </footer>
 </div>
 
-<!-- استدعاء مكتبة Leaflet JS -->
+<!-- مكتبة Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script>
-    let map = null;
 
-    function switchScreen(screenName) {
+<!-- Firebase SDKs -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore, collection, add슐, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyApq09S2WZ2xz258rfCzwIYJJcKADKr-0c",
+      authDomain: "maaber-32d38.firebaseapp.com",
+      projectId: "maaber-32d38",
+      storageBucket: "maaber-32d38.firebasestorage.app",
+      messagingSenderId: "468110333900",
+      appId: "1:468110333900:web:d8d6b8e2fda75d45142f69",
+      measurementId: "G-B7JCHSQ36R"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    let map = null;
+    let selectedReportText = "درج أو عتبة مرتفعة";
+
+    window.switchScreen = function(screenName) {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
 
@@ -374,19 +393,46 @@
                         .bindPopup('<b>🟢 مسار آمن ممهد للكرسي المتحرك</b>')
                         .openPopup();
                 }
+                loadReportsFromFirebase(map);
                 map.invalidateSize();
             }, 250);
         }
     }
 
-    function selectReport(element) {
+    window.selectReport = function(element, reportType) {
         document.querySelectorAll('.report-option').forEach(opt => opt.classList.remove('selected'));
         element.classList.add('selected');
+        selectedReportText = reportType;
     }
 
-    function sendReport() {
-        alert('تم إرسال التنبيه بنجاح! شكراً لمساهمتك في جعل دروبنا أكثر أماناً.');
-        switchScreen('home');
+    window.sendReportToFirebase = async function() {
+        try {
+            // إرسال البلاغ لقاعدة بيانات Firestore
+            await addDoc(collection(db, "reports"), {
+                type: selectedReportText,
+                lat: 35.2136 + (Math.random() - 0.5) * 0.01,
+                lng: 4.7558 + (Math.random() - 0.5) * 0.01,
+                createdAt: new Date().toISOString()
+            });
+            alert('تم إرسال التنبيه وحفظه في السحابة بنجاح! 🚀');
+            window.switchScreen('home');
+        } catch (e) {
+            console.error("Error adding document: ", e);
+            alert('حدث خطأ أثناء الإرسال، تأكد من الاتصال.');
+        }
+    }
+
+    async function loadReportsFromFirebase(currentMap) {
+        try {
+            const querySnapshot = await getDocs(collection(db, "reports"));
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                L.marker([data.lat, data.lng]).addTo(currentMap)
+                    .bindPopup(`<b>⚠️ تنبيه عائق:</b><br>${data.type}`);
+            });
+        } catch (e) {
+            console.error("Error loading reports: ", e);
+        }
     }
 </script>
 
