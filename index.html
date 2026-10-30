@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maaber - دروب آمنة</title>
+    <!-- استدعاء مكتبة الخرائط Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         * {
             box-sizing: border-box;
@@ -46,6 +48,7 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid #333;
+            z-index: 1000;
         }
         h1 {
             font-size: 22px;
@@ -122,25 +125,19 @@
             font-size: 15px;
             color: #fff;
         }
-        /* شاشة الخريطة والملاحة */
-        .map-view {
+        /* شاشة الخريطة الحقيقية */
+        .map-container {
             flex: 1;
-            background-color: #252525;
             border-radius: 16px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 15px;
+            overflow: hidden;
             border: 1px solid #333;
-            background-image: radial-gradient(#333 1px, transparent 1px);
-            background-size: 20px 20px;
+            margin-bottom: 15px;
+            min-height: 300px;
         }
-        .route-indicator {
-            background-color: rgba(30, 30, 30, 0.9);
-            padding: 15px;
-            border-radius: 12px;
-            border-right: 4px solid #4CAF50;
+        #real-map {
+            width: 100%;
+            height: 100%;
+            background: #1e1e1e;
         }
         /* شاشة الإبلاغ */
         .report-option {
@@ -173,7 +170,7 @@
             width: 100%;
             cursor: pointer;
             text-align: center;
-            margin-top: 15px;
+            margin-top: 10px;
         }
         .btn-primary:active {
             background-color: #388E3C;
@@ -185,6 +182,7 @@
             display: flex;
             justify-content: space-around;
             padding: 12px 0;
+            z-index: 1000;
         }
         .nav-item {
             background: none;
@@ -211,7 +209,7 @@
     <!-- الهيدر الثابت -->
     <header>
         <h1>Maaber</h1>
-        <div class="badge">آمن ومستقر</div>
+        <div class="badge">خريطة تفاعلية</div>
     </header>
 
     <!-- 1. الشاشة الرئيسية -->
@@ -235,23 +233,20 @@
                 <span>♿</span>
                 <h3>الأماكن المتاحة</h3>
             </div>
-            <div class="menu-card" onclick="alert('تطبيق Maaber يعمل بنظام مستقر تماماً وبدون أخطاء.')">
+            <div class="menu-card" onclick="alert('تطبيق Maaber يعمل بنظام مستقر وتفاعلي.')">
                 <span>🛡️</span>
                 <h3>الحالة الآمنة</h3>
             </div>
         </div>
     </div>
 
-    <!-- 2. شاشة الخريطة والملاحة -->
+    <!-- 2. شاشة الخريطة الحقيقية والملاحة -->
     <div id="screen-map" class="screen">
-        <div class="welcome-text">ملاحة الكرسي المتحرك 🧭</div>
-        <div class="map-view">
-            <div class="route-indicator">
-                <p style="color: #4CAF50; font-weight: bold;">🟢 المسار الحالي ممهد وخالٍ من السلالم</p>
-                <p style="font-size: 13px; color: #bbb; margin-top: 5px;">المسافة المتبقية: 350 متر • المنعطف القادم يمين بمدرج مائل.</p>
-            </div>
+        <div class="welcome-text" style="margin-bottom: 10px;">خريطة الدروب الآمنة 🧭</div>
+        <div class="map-container">
+            <div id="real-map"></div>
         </div>
-        <button class="btn-primary" onclick="alert('تم تفعيل التوجيه الصوتي بنجاح.')">بدء التوجيه الصوتي 🔊</button>
+        <button class="btn-primary" onclick="alert('تم تفعيل التوجيه الصوتي للمسار الآمن بنجاح.')">بدء التوجيه الصوتي 🔊</button>
     </div>
 
     <!-- 3. شاشة الإبلاغ عن العوائق -->
@@ -300,18 +295,41 @@
     </footer>
 </div>
 
+<!-- استدعاء مكتبة Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
+    let map = null;
+
     function switchScreen(screenName) {
-        // إخفاء كل الشاشات
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
 
-        // إظهار الشاشة المطلوبة
         document.getElementById('screen-' + screenName).classList.add('active');
         
-        // تفعيل الزر السفلي المناسب
         if(document.getElementById('nav-' + screenName)) {
             document.getElementById('nav-' + screenName).classList.add('active');
+        }
+
+        // إذا انتقل المستخدم لشاشة الخريطة، نقوم بتحديث قياساتها لتعمل بشكل سليم
+        if (screenName === 'map') {
+            setTimeout(() => {
+                if (!map) {
+                    // تهيئة الخريطة الحقيقية (الإحداثيات الافتراضية هنا كمثال، ممهدة وآمنة)
+                    map = L.map('real-map').setView([35.2136, 4.7558], 15);
+
+                    // إضافة طبقة خريطة الشوارع (OpenStreetMap)
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        maxZoom: 19,
+                        attribution: 'Maaber Safe Routes'
+                    }).addTo(map);
+
+                    // إضافة علامة توضيحية لمسار آمن
+                    L.marker([35.2136, 4.7558]).addTo(map)
+                        .bindPopup('<b>🟢 مسار آمن ممهد للكرسي المتحرك</b>')
+                        .openPopup();
+                }
+                map.invalidateSize();
+            }, 200);
         }
     }
 
