@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maaber - دروب آمنة</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .phone-container {
+            width: 100%;
+            max-width: 400px;
+            height: 100%;
+            max-height: 850px;
+            background-color: #1e1e1e;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            border-radius: 0;
+        }
+        @media (min-width: 401px) {
+            .phone-container {
+                border-radius: 24px;
+                height: 90vh;
+            }
+        }
+        /* الهيدر */
+        header {
+            padding: 20px;
+            background-color: #252525;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+        }
+        h1 {
+            font-size: 22px;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        .badge {
+            background-color: #2e7d32;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+        /* محتوى الشاشات */
+        .screen {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: none;
+            flex-direction: column;
+        }
+        .screen.active {
+            display: flex;
+        }
+        /* الشاشة الرئيسية */
+        .welcome-text {
+            font-size: 20px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .search-box {
+            background-color: #2c2c2c;
+            border: 1px solid #444;
+            border-radius: 14px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            width: 100%;
+            outline: none;
+            text-align: right;
+        }
+        .grid-menu {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .menu-card {
+            background-color: #2c2c2c;
+            border: 1px solid #383838;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .menu-card:active {
+            background-color: #383838;
+            transform: scale(0.97);
+        }
+        .menu-card span {
+            font-size: 32px;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .menu-card h3 {
+            font-size: 15px;
+            color: #fff;
+        }
+        /* شاشة الخريطة والملاحة */
+        .map-view {
+            flex: 1;
+            background-color: #252525;
+            border-radius: 16px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 15px;
+            border: 1px solid #333;
+            background-image: radial-gradient(#333 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .route-indicator {
+            background-color: rgba(30, 30, 30, 0.9);
+            padding: 15px;
+            border-radius: 12px;
+            border-right: 4px solid #4CAF50;
+        }
+        /* شاشة الإبلاغ */
+        .report-option {
+            background-color: #2c2c2c;
+            border: 2px solid #444;
+            padding: 15px;
+            border-radius: 14px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        .report-option.selected {
+            border-color: #4CAF50;
+            background-color: #1b331e;
+        }
+        .report-option span {
+            font-size: 24px;
+            margin-left: 15px;
+        }
+        /* أزرار عامة */
+        .btn-primary {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+            text-align: center;
+            margin-top: 15px;
+        }
+        .btn-primary:active {
+            background-color: #388E3C;
+        }
+        /* الفوتر (شريط التنقل السفلي) */
+        footer {
+            background-color: #181818;
+            border-top: 1px solid #333;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+        }
+        .nav-item {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+        .nav-item.active {
+            color: #4CAF50;
+        }
+        .nav-item span {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="phone-container">
+    <!-- الهيدر الثابت -->
+    <header>
+        <h1>Maaber</h1>
+        <div class="badge">آمن ومستقر</div>
+    </header>
+
+    <!-- 1. الشاشة الرئيسية -->
+    <div id="screen-home" class="screen active">
+        <div class="welcome-text">مرحباً بك 👋<br>إلى أين تريد الذهاب بأمان اليوم؟</div>
+        
+        <div class="search-box">
+            <input type="text" placeholder="ابحث عن مكان، صيدلية، أو مستشفى...">
+        </div>
+
+        <div class="grid-menu">
+            <div class="menu-card" onclick="switchScreen('map')">
+                <span>🗺️</span>
+                <h3>المسار الآمن</h3>
+            </div>
+            <div class="menu-card" onclick="switchScreen('report')">
+                <span>⚠️</span>
+                <h3>إبلاغ عن عائق</h3>
+            </div>
+            <div class="menu-card" onclick="alert('خاصية الأماكن المتاحة مفعلة وجاهزة.')">
+                <span>♿</span>
+                <h3>الأماكن المتاحة</h3>
+            </div>
+            <div class="menu-card" onclick="alert('تطبيق Maaber يعمل بنظام مستقر تماماً وبدون أخطاء.')">
+                <span>🛡️</span>
+                <h3>الحالة الآمنة</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. شاشة الخريطة والملاحة -->
+    <div id="screen-map" class="screen">
+        <div class="welcome-text">ملاحة الكرسي المتحرك 🧭</div>
+        <div class="map-view">
+            <div class="route-indicator">
+                <p style="color: #4CAF50; font-weight: bold;">🟢 المسار الحالي ممهد وخالٍ من السلالم</p>
+                <p style="font-size: 13px; color: #bbb; margin-top: 5px;">المسافة المتبقية: 350 متر • المنعطف القادم يمين بمدرج مائل.</p>
+            </div>
+        </div>
+        <button class="btn-primary" onclick="alert('تم تفعيل التوجيه الصوتي بنجاح.')">بدء التوجيه الصوتي 🔊</button>
+    </div>
+
+    <!-- 3. شاشة الإبلاغ عن العوائق -->
+    <div id="screen-report" class="screen">
+        <div class="welcome-text">إبلاغ سريع عن عائق ⚠️</div>
+        <p style="font-size: 14px; color: #aaa; margin-bottom: 15px;">اختر نوع العائق لتنبيه المستخدمين الآخرين فوراً:</p>
+
+        <div class="report-option" onclick="selectReport(this)">
+            <span>🪜</span>
+            <div>
+                <strong>درج أو عتبة مرتفعة</strong>
+                <p style="font-size: 12px; color: #888;">بدون منحدر بديل</p>
+            </div>
+        </div>
+
+        <div class="report-option" onclick="selectReport(this)">
+            <span>🚧</span>
+            <div>
+                <strong>حفريات أو أشغال طريق</strong>
+                <p style="font-size: 12px; color: #888;">تعيق حركة العجلات</p>
+            </div>
+        </div>
+
+        <div class="report-option" onclick="selectReport(this)">
+            <span>🚗</span>
+            <div>
+                <strong>سيارة تقفل الرصيف</strong>
+                <p style="font-size: 12px; color: #888;">تغلق مسار العبور</p>
+            </div>
+        </div>
+
+        <button class="btn-primary" onclick="sendReport()">إرسال التنبيه الآن 🚀</button>
+    </div>
+
+    <!-- شريط التنقل السفلي -->
+    <footer>
+        <button class="nav-item active" id="nav-home" onclick="switchScreen('home')">
+            <span>🏠</span>الرئيسية
+        </button>
+        <button class="nav-item" id="nav-map" onclick="switchScreen('map')">
+            <span>🗺️</span>الخريطة
+        </button>
+        <button class="nav-item" id="nav-report" onclick="switchScreen('report')">
+            <span>⚠️</span>إبلاغ
+        </button>
+    </footer>
+</div>
+
+<script>
+    function switchScreen(screenName) {
+        // إخفاء كل الشاشات
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+        // إظهار الشاشة المطلوبة
+        document.getElementById('screen-' + screenName).classList.add('active');
+        
+        // تفعيل الزر السفلي المناسب
+        if(document.getElementById('nav-' + screenName)) {
+            document.getElementById('nav-' + screenName).classList.add('active');
+        }
+    }
+
+    function selectReport(element) {
+        document.querySelectorAll('.report-option').forEach(opt => opt.classList.remove('selected'));
+        element.classList.add('selected');
+    }
+
+    function sendReport() {
+        alert('تم إرسال التنبيه بنجاح! شكراً لمساهمتك في جعل دروبنا أكثر أماناً.');
+        switchScreen('home');
+    }
+</script>
+
+</body>
+</html>
