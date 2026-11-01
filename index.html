@@ -351,7 +351,7 @@
 <!-- Firebase SDKs -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, collection, add슐, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyApq09S2WZ2xz258rfCzwIYJJcKADKr-0c",
@@ -407,7 +407,6 @@
 
     window.sendReportToFirebase = async function() {
         try {
-            // إرسال البلاغ لقاعدة بيانات Firestore
             await addDoc(collection(db, "reports"), {
                 type: selectedReportText,
                 lat: 35.2136 + (Math.random() - 0.5) * 0.01,
