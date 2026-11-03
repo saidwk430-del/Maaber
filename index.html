@@ -33,7 +33,6 @@
             position: relative;
             box-shadow: 0 0 40px rgba(0, 243, 255, 0.15);
             border: 1px solid rgba(0, 243, 255, 0.2);
-            border-radius: 0;
         }
         @media (min-width: 411px) {
             .phone-container {
@@ -41,58 +40,6 @@
                 height: 94vh;
             }
         }
-        /* هيدر فخم وساطع */
-        header {
-            padding: 16px 20px;
-            background: rgba(9, 9, 14, 0.85);
-            backdrop-filter: blur(16px);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            z-index: 1000;
-        }
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.5);
-            border: 1px solid rgba(255,255,255,0.4);
-        }
-        h1 {
-            font-size: 22px;
-            color: #ffffff;
-            font-weight: 800;
-            text-shadow: 0 0 10px rgba(0, 242, 254, 0.4);
-        }
-        .sub-logo {
-            font-size: 10px;
-            color: #94a3b8;
-        }
-        .badge {
-            background: rgba(16, 185, 129, 0.15);
-            color: #34D399;
-            border: 1px solid rgba(16, 185, 129, 0.4);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-            box-shadow: 0 0 12px rgba(16, 185, 129, 0.2);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
         /* محتوى الشاشات */
         .screen {
             flex: 1;
@@ -105,163 +52,21 @@
         .screen.active {
             display: flex;
         }
-
-        /* كارت الترحيب البانر */
-        .welcome-banner {
-            background: linear-gradient(135deg, rgba(30, 58, 138, 0.4) 0%, rgba(15, 23, 42, 0.6) 100%);
-            border: 1px solid rgba(0, 242, 254, 0.3);
-            border-radius: 24px;
-            padding: 18px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: inset 0 0 20px rgba(0, 242, 254, 0.08);
-            position: relative;
-            overflow: hidden;
-        }
-        .welcome-text h2 {
-            font-size: 18px;
-            color: #ffffff;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-        .welcome-text p {
-            font-size: 13px;
-            color: #cbd5e1;
-            line-height: 1.4;
-        }
-        .welcome-img {
-            width: 75px;
-            height: 75px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 38px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        /* شريط البحث */
-        .search-box {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(0, 242, 254, 0.25);
-            border-radius: 20px;
-            padding: 12px 18px;
-            display: flex;
-            align-items: center;
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.05);
-            transition: 0.3s;
-        }
-        .search-box:focus-within {
-            border-color: #00f2fe;
-            box-shadow: 0 0 20px rgba(0, 242, 254, 0.25);
-        }
-        .search-box input {
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-size: 14px;
+        /* عرض الصور المصممة كواجهات متكاملة */
+        .design-preview {
             width: 100%;
-            outline: none;
-            text-align: right;
-        }
-        .search-box input::placeholder {
-            color: #64748b;
-        }
-        .search-icon {
-            color: #00f2fe;
-            font-size: 18px;
-            margin-left: 8px;
-        }
-
-        /* شبكة الأزرار الأربعة الرئيسية */
-        .grid-menu {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-        .menu-card {
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.04) 0%, rgba(15, 23, 42, 0.5) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 22px;
-            padding: 18px 14px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .menu-card:hover {
-            border-color: rgba(0, 242, 254, 0.5);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 242, 254, 0.12);
-        }
-        .menu-card.warning-glow:hover {
-            border-color: rgba(245, 158, 11, 0.6);
-            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.15);
-        }
-        .card-icon-container {
-            width: 55px;
-            height: 55px;
-            margin: 0 auto 10px auto;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .menu-card h3 {
-            font-size: 14px;
-            color: #f1f5f9;
-            font-weight: 700;
-            margin-bottom: 3px;
-        }
-        .menu-card p {
-            font-size: 11px;
-            color: #94a3b8;
-        }
-        .arrow-btn {
-            width: 26px;
-            height: 26px;
-            background: rgba(0, 242, 254, 0.15);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 10px auto 0 auto;
-            color: #00f2fe;
-            font-size: 12px;
-            border: 1px solid rgba(0, 242, 254, 0.3);
-        }
-
-        /* البانر السفلي في الرئيسية */
-        .bottom-banner {
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 27, 75, 0.6) 100%);
-            border: 1px solid rgba(168, 85, 247, 0.3);
             border-radius: 20px;
-            padding: 14px 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 0 20px rgba(168, 85, 247, 0.1);
+            overflow: hidden;
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.15);
+            cursor: pointer;
+            margin-bottom: 10px;
         }
-        .bottom-banner-text h4 {
-            font-size: 13px;
-            color: #ffffff;
-            font-weight: 700;
-            margin-bottom: 2px;
+        .design-preview img {
+            width: 100%;
+            height: auto;
+            display: block;
         }
-        .bottom-banner-text p {
-            font-size: 10px;
-            color: #cbd5e1;
-        }
-        .banner-icon {
-            font-size: 28px;
-        }
-
         /* شاشة الخريطة */
         .map-layout {
             flex: 1;
@@ -270,14 +75,6 @@
             gap: 10px;
             min-height: 0;
         }
-        .map-title {
-            font-size: 15px;
-            font-weight: 700;
-            color: #00f2fe;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
         .map-container {
             flex: 1;
             border-radius: 20px;
@@ -285,64 +82,12 @@
             border: 1px solid rgba(0, 242, 254, 0.3);
             min-height: 240px;
             position: relative;
-            box-shadow: 0 0 20px rgba(0, 242, 254, 0.1);
         }
         #real-map {
             width: 100%;
             height: 100%;
             background: #09090e;
         }
-        .route-card-lux {
-            background: rgba(15, 23, 42, 0.7);
-            border: 1px solid rgba(16, 185, 129, 0.4);
-            border-right: 4px solid #10B981;
-            padding: 12px 15px;
-            border-radius: 14px;
-        }
-
-        /* شاشة الإبلاغ */
-        .report-option {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 14px;
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .report-option.selected {
-            border-color: #00f2fe;
-            background: rgba(0, 242, 254, 0.08);
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.15);
-        }
-        .report-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .report-icon-box {
-            font-size: 26px;
-            background: rgba(255,255,255,0.05);
-            width: 45px;
-            height: 45px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .report-text h4 {
-            font-size: 14px;
-            color: #ffffff;
-            font-weight: 700;
-        }
-        .report-text p {
-            font-size: 11px;
-            color: #94a3b8;
-        }
-
         /* زر رئيسي متوهج */
         .btn-primary {
             background: linear-gradient(135deg, #00f2fe 0%, #047857 100%);
@@ -356,12 +101,7 @@
             cursor: pointer;
             text-align: center;
             box-shadow: 0 4px 20px rgba(0, 242, 254, 0.3);
-            transition: 0.2s;
         }
-        .btn-primary:active {
-            transform: scale(0.98);
-        }
-
         /* الفوتر السفلي السحابي الفخم */
         footer {
             background: rgba(5, 5, 8, 0.95);
@@ -383,7 +123,6 @@
             flex-direction: column;
             align-items: center;
             gap: 4px;
-            transition: 0.3s;
         }
         .nav-item.active {
             color: #00f2fe;
@@ -397,138 +136,40 @@
 <body>
 
 <div class="phone-container">
-    <!-- الهيدر الفخم -->
-    <header>
-        <div class="logo-area">
-            <div class="logo-icon">♿</div>
-            <div>
-                <h1>معابر</h1>
-                <div class="sub-logo">معاً .. لحياة أسهل</div>
-            </div>
-        </div>
-        <div class="badge">⚡ متصل بالسحابة</div>
-    </header>
-
-    <!-- 1. الشاشة الرئيسية -->
+    <!-- 1. الشاشة الرئيسية (تستدعي صورتك الأولى المصممة) -->
     <div id="screen-home" class="screen active">
-        <!-- بانر الترحيب -->
-        <div class="welcome-banner">
-            <div class="welcome-text">
-                <h2>مرحباً بك 👋</h2>
-                <p>إلى أين تريد الذهاب بأمان اليوم؟</p>
-            </div>
-            <div class="welcome-img">🦽</div>
+        <div class="design-preview" onclick="switchScreen('map')">
+            <img src="file_000000003c388210915c5ba365459a8a.png" alt="واجهة الرئيسية معابر">
         </div>
-        
-        <!-- شريط البحث -->
-        <div class="search-box">
-            <span class="search-icon">🔍</span>
-            <input type="text" placeholder="ابحث عن مكان، صيدلية، أو مستشفى ...">
-        </div>
-
-        <!-- الأزرار الأربعة بتصميم Cyber -->
-        <div class="grid-menu">
-            <div class="menu-card warning-glow" onclick="switchScreen('report')">
-                <div class="card-icon-container">⚠️</div>
-                <h3>إبلاغ عن عائق</h3>
-                <p>ساعد الآخرين وشارك المشكلة</p>
-                <div class="arrow-btn">➔</div>
-            </div>
-            
-            <div class="menu-card" onclick="switchScreen('map')">
-                <div class="card-icon-container">🗺️</div>
-                <h3>المسار الآمن</h3>
-                <p>اعثر على أفضل طريق مناسب</p>
-                <div class="arrow-btn">➔</div>
-            </div>
-
-            <div class="menu-card" onclick="alert('خاصية الحالة الآمنة مفعلة: معلومات السلامة والتنبيهات نشطة.')">
-                <div class="card-icon-container">🛡️</div>
-                <h3>الحالة الآمنة</h3>
-                <p>معلومات السلامة والتنبيهات</p>
-                <div class="arrow-btn">➔</div>
-            </div>
-
-            <div class="menu-card" onclick="alert('خاصية الأماكن المتاحة: جاري عرض المنحدرات والمرافق المهيأة.')">
-                <div class="card-icon-container">♿</div>
-                <h3>الأماكن المتاحة</h3>
-                <p>اكتشف الأماكن المهيأة لذوي الاحتياجات</p>
-                <div class="arrow-btn">➔</div>
-            </div>
-        </div>
-
-        <!-- البانر السفلي -->
-        <div class="bottom-banner">
-            <div class="bottom-banner-text">
-                <h4>معابر .. طريقك إلى مجتمع شامل</h4>
-                <p>لأن حقك في الوصول حق للجميع</p>
-            </div>
-            <div class="banner-icon">🌆</div>
-        </div>
+        <div style="text-align: center; color: #94a3b8; font-size: 12px;">انقر على التصميم للانتقال المباشر للمسار الآمن 🗺️</div>
     </div>
 
     <!-- 2. شاشة الخريطة التفاعلية -->
     <div id="screen-map" class="screen">
         <div class="map-layout">
-            <div class="map-title">🧭 خريطة الدروب الآمنة</div>
+            <div style="font-size: 15px; font-weight: 700; color: #00f2fe;">🧭 خريطة الدروب الآمنة</div>
             <div class="map-container">
                 <div id="real-map"></div>
             </div>
-            <div class="route-card-lux">
-                <p style="color: #34D399; font-weight: bold; font-size: 13px;">🟢 المسار الحالي ممهد وخالٍ من السلالم</p>
-                <p style="font-size: 12px; color: #9ca3af; margin-top: 3px;">المسافة المتبقية: 350 متر • منحدر آمن مهيأ للكراسي.</p>
+            <div class="design-preview" style="margin: 0;" onclick="switchScreen('report')">
+                <img src="file_0000000094088210accacb42012609b7.png" alt="خريطة معابر">
             </div>
             <button class="btn-primary" onclick="alert('تم تفعيل التوجيه الصوتي للمسار الآمن بنجاح.')">بدء التوجيه الصوتي 🔊</button>
         </div>
     </div>
 
-    <!-- 3. شاشة الإبلاغ عن العوائق -->
+    <!-- 3. شاشة الإبلاغ عن العوائق (تستدعي صورتك الثانية المصممة) -->
     <div id="screen-report" class="screen">
-        <div style="margin-bottom: 4px;">
-            <h2 style="font-size: 18px; color: #ffffff; display: flex; align-items: center; gap: 8px;">⚠️ إبلاغ سريع عن عائق</h2>
-            <p style="font-size: 12px; color: #94a3b8; margin-top: 2px;">اختر نوع العائق لتنبيه المستخدمين الآخرين فوراً:</p>
+        <div class="design-preview" onclick="sendReportToFirebase()">
+            <img src="file_0000000048c824696dda2f0e3716f59.png" alt="شاشة الإبلاغ">
         </div>
-
-        <div class="report-option selected" onclick="selectReport(this, 'درج أو عتبة مرتفعة')">
-            <div class="report-info">
-                <div class="report-icon-box">🪜</div>
-                <div class="report-text">
-                    <h4>درج أو عتبة مرتفعة</h4>
-                    <p>بدون منحدر بديل</p>
-                </div>
-            </div>
-            <div style="color: #00f2fe; font-size: 18px;">‹</div>
-        </div>
-
-        <div class="report-option" onclick="selectReport(this, 'حفريات أو أشغال طريق')">
-            <div class="report-info">
-                <div class="report-icon-box">🚧</div>
-                <div class="report-text">
-                    <h4>حفريات أو أشغال طريق</h4>
-                    <p>تعيق حركة العجلات</p>
-                </div>
-            </div>
-            <div style="color: #00f2fe; font-size: 18px;">‹</div>
-        </div>
-
-        <div class="report-option" onclick="selectReport(this, 'سيارة تقفل الرصيف')">
-            <div class="report-info">
-                <div class="report-icon-box">🚗</div>
-                <div class="report-text">
-                    <h4>سيارة تقفل الرصيف</h4>
-                    <p>تغلق مسار العبور</p>
-                </div>
-            </div>
-            <div style="color: #00f2fe; font-size: 18px;">‹</div>
-        </div>
-
-        <button class="btn-primary" onclick="sendReportToFirebase()" style="margin-top: auto;">إرسال التنبيه الآن 🚀</button>
+        <button class="btn-primary" onclick="sendReportToFirebase()">إرسال التنبيه للسحابة 🚀</button>
     </div>
 
     <!-- الفوتر السفلي المضيء -->
     <footer>
         <button class="nav-item" id="nav-report" onclick="switchScreen('report')">
-            <span>⚠️</span>الإعدادات
+            <span>⚠️</span>الإبلاغ
         </button>
         <button class="nav-item" id="nav-map" onclick="switchScreen('map')">
             <span>🗺️</span>الخريطة
@@ -550,18 +191,16 @@
     const firebaseConfig = {
       apiKey: "AIzaSyApq09S2WZ2xz258rfCzwIYJJcKADKr-0c",
       authDomain: "maaber-32d38.firebaseapp.com",
-      projectId: "maaber-32d38",
+      projectId: "Maaber-32d38",
       storageBucket: "maaber-32d38.firebasestorage.app",
       messagingSenderId: "468110333900",
-      appId: "1:468110333900:web:d8d6b8e2fda75d45142f69",
-      measurementId: "G-B7JCHSQ36R"
+      appId: "1:468110333900:web:d8d6b8e2fda75d45142f69"
     };
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
     let map = null;
-    let selectedReportText = "درج أو عتبة مرتفعة";
 
     window.switchScreen = function(screenName) {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -577,7 +216,6 @@
             setTimeout(() => {
                 if (!map) {
                     map = L.map('real-map').setView([35.2136, 4.7558], 16);
-
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         maxZoom: 19,
                         attribution: 'Maaber Safe Routes'
@@ -593,21 +231,15 @@
         }
     }
 
-    window.selectReport = function(element, reportType) {
-        document.querySelectorAll('.report-option').forEach(opt => opt.classList.remove('selected'));
-        element.classList.add('selected');
-        selectedReportText = reportType;
-    }
-
     window.sendReportToFirebase = async function() {
         try {
             await addDoc(collection(db, "reports"), {
-                type: selectedReportText,
+                type: "عائق مرصود من الواجهة",
                 lat: 35.2136 + (Math.random() - 0.5) * 0.01,
                 lng: 4.7558 + (Math.random() - 0.5) * 0.01,
                 createdAt: new Date().toISOString()
             });
-            alert('تم إرسال التنبيه وحفظه في السحابة بنجاح! 🚀');
+            alert('تم إرسال التنبيه وحفظه في سحابة Firebase بنجاح! 🚀');
             window.switchScreen('home');
         } catch (e) {
             console.error("Error adding document: ", e);
